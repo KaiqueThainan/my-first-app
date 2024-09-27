@@ -7,4 +7,4 @@ export function Teste(){
             <Text>Eu e a Karina somos e seremos para todo sempre incriveis!!! </Text>
         </View>
       );
-}
+} 
