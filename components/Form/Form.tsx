@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native"
+import { FlatList } from "react-native-gesture-handler";
 
 export function Form(){
     const [height, setHeight] = useState ('');
     const [weight, setWeight] = useState ('');
     const [imc, setImc] = useState ('');
+    const [ImcList, setImclist] = useState([]);
     
-    function imcCalculator()
-    {
-        let totalImc = (weight/(height*height)).toFixed(2)
 
-        setImc(totalImc)
-    }
 
     function validatorImc()
     {
-         if (weight != '' && height != ''){
-            imcCalculator()
+        console.log(ImcList);
+         if (weight !== undefined  && height !== undefined){
+            let totalImc = (weight/(height*height)).toFixed(2)
+           
+        
+
+
+            ImcList.push(totalImc)
+            setImc(totalImc)
             setHeight('')
             setWeight('')
     
@@ -28,12 +32,16 @@ export function Form(){
          <View style={styles.form}>
             <Text style={styles.formLabel}>Altura:</Text>
             <TextInput
+            onChangeText={setHeight}
+            inputMode="numeric"
              placeholder="Ex. 1.75"
              value={height}
              style={styles.formInput}    
              />
              <Text style={styles.formLabel}>Peso:</Text>
              <TextInput
+            onChangeText={setWeight}
+            inputMode="numeric"
              placeholder="Ex. 67.5"
              value={weight}
              style={styles.formInput}  
@@ -46,6 +54,17 @@ export function Form(){
                 <Text style={styles.formButtonText}>Calcular</Text>
             </Pressable>
             <Text style={styles.formTextImc}>{imc}</Text>
+            <FlatList
+                 data={ImcList.reverse()}
+                 renderItem={({item})=> {
+                    return (
+                        <view>
+                            <text>{item}</text>
+                        </view>
+                    )
+                                 }}
+                
+                 /> 
          </View>
         </View>
     )
